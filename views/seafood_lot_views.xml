@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_production_lot_form_seafood" model="ir.ui.view">
+        <field name="name">stock.lot.form.seafood</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_analyze_ai" type="object" string="Yêu cầu AI Phân tích" class="btn-primary" icon="fa-line-chart"/>
+                </header>
+            </xpath>
+            <xpath expr="//sheet/group" position="after">
+                <group string="Thông tin Thủy Sản &amp; AI">
+                    <group>
+                        <field name="origin_area"/>
+                        <field name="quality_grade"/>
+                        <field name="storage_temperature"/>
+                    </group>
+                    <group>
+                        <field name="ai_discount_recommendation" widget="percentage"/>
+                        <field name="ai_warning_message" readonly="1" decoration-danger="ai_discount_recommendation &gt; 0"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_production_lot_tree_seafood" model="ir.ui.view">
+        <field name="name">stock.lot.tree.seafood</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="ai_warning_message" decoration-danger="ai_discount_recommendation &gt; 0"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
