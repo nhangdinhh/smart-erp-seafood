@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Các Action cho Menu AI -->
+    <record id="action_ai_customers" model="ir.actions.act_window">
+        <field name="name">Khách hàng thông minh</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('ai_segmentation_tag', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Chưa có khách hàng nào được AI phân tích!
+            </p>
+            <p>
+                Hãy vào danh sách Khách hàng, chọn một khách và bấm "AI Phân tích".
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ai_restock" model="ir.actions.act_window">
+        <field name="name">Gợi ý Nhập hàng AI</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('ai_restock_suggestion', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Chưa có sản phẩm nào được AI dự báo!
+            </p>
+            <p>
+                Hãy bấm vào "AI Dự báo Nhu cầu" trên từng Sản phẩm để xem đề xuất.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ai_lot_warnings" model="ir.actions.act_window">
+        <field name="name">Cảnh báo Lô hàng AI</field>
+        <field name="res_model">stock.lot</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('ai_warning_message', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tuyệt vời, không có Lô hàng nào bị AI cảnh báo!
+            </p>
+        </field>
+    </record>
+
+    <!-- Root Menu -->
+    <menuitem id="menu_seafood_ai_root"
+              name="Hải Sản AI"
+              web_icon="seafood_management,static/description/icon.png"
+              sequence="5"/>
+
+    <!-- Nhóm Menu -->
+    <menuitem id="menu_seafood_ai_dashboard"
+              name="Báo cáo AI"
+              parent="menu_seafood_ai_root"
+              sequence="10"/>
+
+    <!-- Menu Item (Con) -->
+    <menuitem id="menu_ai_customers"
+              name="Khách hàng thông minh"
+              parent="menu_seafood_ai_dashboard"
+              action="action_ai_customers"
+              sequence="1"/>
+
+    <menuitem id="menu_ai_restock"
+              name="Dự báo &amp; Nhập hàng"
+              parent="menu_seafood_ai_dashboard"
+              action="action_ai_restock"
+              sequence="2"/>
+
+    <menuitem id="menu_ai_lot_warnings"
+              name="Cảnh báo Lô hàng"
+              parent="menu_seafood_ai_dashboard"
+              action="action_ai_lot_warnings"
+              sequence="3"/>
+
+</odoo>
