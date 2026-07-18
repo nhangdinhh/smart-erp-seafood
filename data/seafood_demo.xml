@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- PRODUCTS -->
+        <record id="product_muc_ong_new" model="product.product"><field name="name">Mực Ống</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">180000</field></record>
+        <record id="product_cua_bien_new" model="product.product"><field name="name">Cua Biển</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">450000</field></record>
+        <record id="product_ca_ngu_new" model="product.product"><field name="name">Cá Ngừ</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">120000</field></record>
+        <record id="product_bach_tuoc_new" model="product.product"><field name="name">Bạch Tuộc</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">160000</field></record>
+        <record id="product_hau_sua_new" model="product.product"><field name="name">Hàu Sữa</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">80000</field></record>
+        <record id="product_so_huyet_new" model="product.product"><field name="name">Sò Huyết</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">95000</field></record>
+
+        <!-- THÊM 7 SẢN PHẨM MỚI -->
+        <record id="product_ca_ho_new" model="product.product"><field name="name">Cá Hố</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">110000</field></record>
+        <record id="product_ca_nuc_new" model="product.product"><field name="name">Cá Nục</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">85000</field></record>
+        <record id="product_ca_thu_new" model="product.product"><field name="name">Cá Thu</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">180000</field></record>
+        <record id="product_tom_cang_xanh_new" model="product.product"><field name="name">Tôm Càng Xanh</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">420000</field></record>
+        <record id="product_tom_hum_new" model="product.product"><field name="name">Tôm Hùm</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">1250000</field></record>
+        <record id="product_muc_la_new" model="product.product"><field name="name">Mực Lá</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">260000</field></record>
+        <record id="product_ghe_xanh_new" model="product.product"><field name="name">Ghẹ Xanh</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">380000</field></record>
+        <record id="product_oc_huong_new" model="product.product"><field name="name">Ốc Hương</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">450000</field></record>
+        <record id="product_ngao_2_co_new" model="product.product"><field name="name">Ngao 2 Cùi</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">150000</field></record>
+
+        <!-- THÊM 5 SẢN PHẨM CAO CẤP -->
+        <record id="product_cua_hoang_de_new" model="product.product"><field name="name">Cua Hoàng Đế</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">2500000</field></record>
+        <record id="product_bao_ngu_new" model="product.product"><field name="name">Bào Ngư</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">1500000</field></record>
+        <record id="product_tom_tit_new" model="product.product"><field name="name">Tôm Tít</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">850000</field></record>
+        <record id="product_ca_mu_new" model="product.product"><field name="name">Cá Mú</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">450000</field></record>
+        <record id="product_muc_sua_new" model="product.product"><field name="name">Mực Sữa</field><field name="type">consu</field><field name="is_storable">True</field><field name="tracking">lot</field><field name="list_price">220000</field></record>
+
+        <!-- LOTS WITH AI DATA -->
+        <record id="lot_muc_ong_demo" model="stock.lot">
+            <field name="name">LOT-MUCONG-001</field><field name="product_id" ref="product_muc_ong_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Phan Thiết</field><field name="storage_temperature">-20</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=15)).strftime('%Y-%m-%d 14:00:00')"/><field name="ai_discount_recommendation">0.0</field><field name="ai_warning_message">An toàn.</field>
+        </record>
+        <record id="lot_cua_bien_demo" model="stock.lot">
+            <field name="name">LOT-CUABIEN-001</field><field name="product_id" ref="product_cua_bien_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Năm Căn</field><field name="storage_temperature">4</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=4)).strftime('%Y-%m-%d 11:00:00')"/><field name="ai_discount_recommendation">15.0</field><field name="ai_warning_message">Hao hụt tăng.</field>
+        </record>
+        <record id="lot_ca_ngu_demo" model="stock.lot">
+            <field name="name">LOT-CANGU-001</field><field name="product_id" ref="product_ca_ngu_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Phú Yên</field><field name="storage_temperature">-60</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=180)).strftime('%Y-%m-%d 09:00:00')"/><field name="ai_discount_recommendation">0.0</field><field name="ai_warning_message">An toàn.</field>
+        </record>
+        <record id="lot_bach_tuoc_demo" model="stock.lot">
+            <field name="name">LOT-BACHTUOC-001</field><field name="product_id" ref="product_bach_tuoc_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Kiên Giang</field><field name="storage_temperature">-18</field><field name="quality_grade">B</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=6)).strftime('%Y-%m-%d 16:00:00')"/><field name="ai_discount_recommendation">25.0</field><field name="ai_warning_message">Hàng loại B</field>
+        </record>
+        <record id="lot_hau_sua_demo" model="stock.lot">
+            <field name="name">LOT-HAUSUA-001</field><field name="product_id" ref="product_hau_sua_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Vân Đồn</field><field name="storage_temperature">0</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=1)).strftime('%Y-%m-%d 23:59:00')"/><field name="ai_discount_recommendation">70.0</field><field name="ai_warning_message">Xả lỗ tối đa</field>
+        </record>
+        <record id="lot_so_huyet_demo" model="stock.lot">
+            <field name="name">LOT-SOHUYET-001</field><field name="product_id" ref="product_so_huyet_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Bạc Liêu</field><field name="storage_temperature">5</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=8)).strftime('%Y-%m-%d 12:00:00')"/><field name="ai_discount_recommendation">10.0</field><field name="ai_warning_message">Kích cầu</field>
+        </record>
+
+        <!-- LÔ HÀNG MỚI -->
+        <record id="lot_ca_ho_demo" model="stock.lot">
+            <field name="name">LOT-CAHO-001</field><field name="product_id" ref="product_ca_ho_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Bình Thuận</field><field name="storage_temperature">-18</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=25)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">0.0</field><field name="ai_warning_message">An Toàn</field>
+        </record>
+        <record id="lot_ca_nuc_demo" model="stock.lot">
+            <field name="name">LOT-CANUC-001</field><field name="product_id" ref="product_ca_nuc_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Nha Trang</field><field name="storage_temperature">-18</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=15)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">10.0</field><field name="ai_warning_message">Kích cầu</field>
+        </record>
+        <record id="lot_ca_thu_demo" model="stock.lot">
+            <field name="name">LOT-CATHU-001</field><field name="product_id" ref="product_ca_thu_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Phan Thiết</field><field name="storage_temperature">-18</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=10)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">0.0</field><field name="ai_warning_message">An Toàn</field>
+        </record>
+        <record id="lot_tom_cang_xanh_demo" model="stock.lot">
+            <field name="name">LOT-TOMCANG-001</field><field name="product_id" ref="product_tom_cang_xanh_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Bến Tre</field><field name="storage_temperature">4</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=3)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">20.0</field><field name="ai_warning_message">Khuyến nghị sale</field>
+        </record>
+        <record id="lot_tom_hum_demo" model="stock.lot">
+            <field name="name">LOT-TOMHUM-001</field><field name="product_id" ref="product_tom_hum_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Khánh Hòa</field><field name="storage_temperature">2</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=12)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">0.0</field><field name="ai_warning_message">Tuyệt hảo</field>
+        </record>
+        <record id="lot_muc_la_demo" model="stock.lot">
+            <field name="name">LOT-MUCLA-001</field><field name="product_id" ref="product_muc_la_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Côn Đảo</field><field name="storage_temperature">-18</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=2)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">40.0</field><field name="ai_warning_message">Xả hàng gấp</field>
+        </record>
+        <record id="lot_ghe_xanh_demo" model="stock.lot">
+            <field name="name">LOT-GHEXANH-001</field><field name="product_id" ref="product_ghe_xanh_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Hà Tiên</field><field name="storage_temperature">10</field><field name="quality_grade">B</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=1)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">60.0</field><field name="ai_warning_message">Rủi ro hỏng cao</field>
+        </record>
+        <record id="lot_oc_huong_demo" model="stock.lot">
+            <field name="name">LOT-OCHUONG-001</field><field name="product_id" ref="product_oc_huong_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Cam Ranh</field><field name="storage_temperature">15</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=5)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">15.0</field><field name="ai_warning_message">Kích cầu</field>
+        </record>
+        <record id="lot_ngao_2_co_demo" model="stock.lot">
+            <field name="name">LOT-NGAO-001</field><field name="product_id" ref="product_ngao_2_co_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Nam Định</field><field name="storage_temperature">5</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=7)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">0.0</field><field name="ai_warning_message">An toàn</field>
+        </record>
+        
+        <record id="lot_cua_hoang_de_demo" model="stock.lot">
+            <field name="name">LOT-KCRAB-001</field><field name="product_id" ref="product_cua_hoang_de_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Alaska</field><field name="storage_temperature">-18</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=30)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">0.0</field><field name="ai_warning_message">Hàng cao cấp - Chuẩn nhiệt</field>
+        </record>
+        <record id="lot_bao_ngu_demo" model="stock.lot">
+            <field name="name">LOT-BAONGU-001</field><field name="product_id" ref="product_bao_ngu_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Hàn Quốc</field><field name="storage_temperature">-20</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=45)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">5.0</field><field name="ai_warning_message">Khuyến mãi kích cầu</field>
+        </record>
+        <record id="lot_tom_tit_demo" model="stock.lot">
+            <field name="name">LOT-TOMTIT-001</field><field name="product_id" ref="product_tom_tit_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Nha Trang</field><field name="storage_temperature">4</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=2)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">15.0</field><field name="ai_warning_message">Đẩy nhanh tiêu thụ</field>
+        </record>
+        <record id="lot_ca_mu_demo" model="stock.lot">
+            <field name="name">LOT-CAMU-001</field><field name="product_id" ref="product_ca_mu_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Phú Quốc</field><field name="storage_temperature">2</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=5)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">0.0</field><field name="ai_warning_message">An toàn</field>
+        </record>
+        <record id="lot_muc_sua_demo" model="stock.lot">
+            <field name="name">LOT-MUCSUA-001</field><field name="product_id" ref="product_muc_sua_new"/><field name="company_id" ref="base.main_company"/><field name="origin_area">Phan Thiết</field><field name="storage_temperature">-18</field><field name="quality_grade">A</field><field name="expiration_date" eval="(datetime.now() + relativedelta(days=15)).strftime('%Y-%m-%d 10:00:00')"/><field name="ai_discount_recommendation">10.0</field><field name="ai_warning_message">Sale cuối tuần</field>
+        </record>
+
+    </data>
+</odoo>
