@@ -1,5 +1,5 @@
 # 🌊 Seafood Management AI ERP
-Test Jenkins Webhook
+## Thuc hanh DevOps Lab 2 - Git & Jenkins
 ![Odoo](https://img.shields.io/badge/Odoo-19.0-purple?style=flat-square&logo=odoo)
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)
 ![AI](https://img.shields.io/badge/AI-Google%20Gemini-orange?style=flat-square&logo=google)
