@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart ERP Seafood - Đăng nhập</title>
+    <title>Đăng nhập</title>
     <!-- Premium Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Premium Icons -->
@@ -86,7 +86,7 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 580px; /* Tăng chiều rộng để form nhìn đẹp hơn khi nhiều trường */
+            max-width: 440px; 
         }
 
         .auth-card {
@@ -94,32 +94,11 @@
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border-radius: 28px;
-            padding: 50px 40px;
+            padding: 40px;
             box-shadow: 
                 0 0 0 1px var(--border),
                 0 30px 60px rgba(0, 0, 0, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .auth-header h1 {
-            font-size: 30px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #fff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .auth-header p {
-            color: var(--text-secondary);
-            font-size: 15px;
-            font-weight: 400;
         }
 
         /* Segmented Control / Tabs */
@@ -128,7 +107,7 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 14px;
             padding: 5px;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             position: relative;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }
@@ -138,7 +117,7 @@
             padding: 12px 0;
             text-align: center;
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             z-index: 2;
@@ -163,7 +142,7 @@
         /* Forms Area */
         .forms-wrapper {
             position: relative;
-            min-height: 420px;
+            min-height: 290px;
         }
 
         .form-panel {
@@ -182,16 +161,6 @@
             position: relative;
         }
 
-        /* Form Grid for Register */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0 16px;
-        }
-
-        .full-width {
-            grid-column: span 2;
-        }
 
         /* Inputs */
         .input-box {
@@ -216,7 +185,7 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 15px;
             font-family: inherit;
             outline: none;
             transition: all 0.3s;
@@ -232,7 +201,7 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 15px;
             pointer-events: none;
             transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -312,7 +281,7 @@
             border-radius: 12px;
             border: none;
             font-family: inherit;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             color: white;
             background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
@@ -398,14 +367,6 @@
             100% { transform: scale(1.05); filter: brightness(1.2); }
         }
 
-        @media (max-width: 600px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .full-width {
-                grid-column: span 1;
-            }
-        }
     </style>
 </head>
 <body>
@@ -429,10 +390,8 @@
         <div class="auth-card">
             
             <div id="auth-flow">
-                <div class="auth-header">
-                    <h1>Hệ thống Smart ERP</h1>
-                    <p>Phân hệ Quản trị Thủy Hải Sản</p>
-                </div>
+                
+                <!-- Removed Title Header Block as requested -->
 
                 <div class="segmented-control">
                     <div class="segment-highlight" id="seg-high"></div>
@@ -443,11 +402,9 @@
                 <div class="forms-wrapper">
                     <!-- Login Form -->
                     <form class="form-panel active" id="form-login" onsubmit="doLogin(event)">
-                        <div class="input-box">
-                            <i class='bx bx-buildings'></i>
-                            <input type="text" id="l-tenant" placeholder="Mã doanh nghiệp (Tùy chọn)" autocomplete="off">
-                            <label>Mã doanh nghiệp (Tùy chọn)</label>
-                        </div>
+                        
+                        <!-- Removed tenant/company code field as requested -->
+
                         <div class="input-box">
                             <i class='bx bx-envelope'></i>
                             <input type="text" id="l-uid" placeholder="Tài khoản hoặc Email" required autocomplete="off">
@@ -471,54 +428,39 @@
 
                     <!-- Register Form -->
                     <form class="form-panel" id="form-register" onsubmit="doRegister(event)">
-                        <div class="form-grid">
-                            <div class="input-box full-width">
-                                <i class='bx bx-user'></i>
-                                <input type="text" id="r-name" placeholder="Họ và tên đầy đủ" required>
-                                <label>Họ và tên đầy đủ</label>
-                            </div>
-                            
-                            <div class="input-box">
-                                <i class='bx bx-buildings'></i>
-                                <input type="text" id="r-company" placeholder="Tên công ty / Tổ chức" required>
-                                <label>Công ty / Tổ chức</label>
-                            </div>
-                            <div class="input-box">
-                                <i class='bx bx-briefcase-alt-2'></i>
-                                <input type="text" id="r-role" placeholder="Chức vụ" required>
-                                <label>Chức vụ</label>
-                            </div>
+                        <div class="input-box">
+                            <i class='bx bx-user'></i>
+                            <input type="text" id="r-name" placeholder="Họ và tên" required>
+                            <label>Họ và tên</label>
+                        </div>
 
-                            <div class="input-box">
-                                <i class='bx bx-phone'></i>
-                                <input type="tel" id="r-phone" placeholder="Số điện thoại" required>
-                                <label>Số điện thoại</label>
-                            </div>
-                            <div class="input-box">
-                                <i class='bx bx-envelope'></i>
-                                <input type="email" id="r-email" placeholder="Email công việc" required>
-                                <label>Email công việc</label>
-                            </div>
+                        <div class="input-box">
+                            <i class='bx bx-envelope'></i>
+                            <input type="email" id="r-email" placeholder="Email" required>
+                            <label>Email</label>
+                        </div>
 
-                            <div class="input-box">
+                        <div style="display: flex; gap: 15px;">
+                            <div class="input-box" style="flex:1;">
                                 <i class='bx bx-lock-alt'></i>
                                 <input type="password" id="r-pwd" placeholder="Mật khẩu" required minlength="6">
                                 <label>Mật khẩu</label>
                             </div>
-                            <div class="input-box">
+                            <div class="input-box" style="flex:1;">
                                 <i class='bx bx-check-shield'></i>
-                                <input type="password" id="r-repwd" placeholder="Xác nhận mật khẩu" required minlength="6">
-                                <label>Xác nhận mật khẩu</label>
-                            </div>
-                            
-                            <div class="full-width meta-actions" style="margin-bottom: 15px;">
-                                <label class="custom-check">
-                                    <input type="checkbox" required>
-                                    <div class="checkmark"></div>
-                                    <span style="font-size: 13px;">Tôi đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật của Smart ERP.</span>
-                                </label>
+                                <input type="password" id="r-repwd" placeholder="Xác nhận" required minlength="6">
+                                <label>Xác nhận</label>
                             </div>
                         </div>
+                        
+                        <div class="meta-actions" style="margin-bottom: 20px;">
+                            <label class="custom-check">
+                                <input type="checkbox" required>
+                                <div class="checkmark"></div>
+                                <span style="font-size: 13.5px;">Tôi đồng ý với Điều khoản Dịch vụ.</span>
+                            </label>
+                        </div>
+                        
                         <button type="submit" class="btn-glow">Đăng ký tài khoản <i class='bx bx-rocket'></i></button>
                     </form>
                 </div>
@@ -581,7 +523,6 @@
             e.preventDefault();
             const name = document.getElementById('r-name').value;
             const email = document.getElementById('r-email').value;
-            const company = document.getElementById('r-company').value;
             const p1 = document.getElementById('r-pwd').value;
             const p2 = document.getElementById('r-repwd').value;
 
@@ -590,16 +531,16 @@
                 return;
             }
             
-            let db = JSON.parse(localStorage.getItem('erp_core_users') || '{}');
+            let db = JSON.parse(localStorage.getItem('ecommerce_users') || '{}');
             if (db[email] || email === 'admin') {
-                showToast('Email hoặc tài khoản đã tồn tại trong hệ thống.', 'error');
+                showToast('Email hoặc tài khoản đã tồn tại.', 'error');
                 return;
             }
 
-            db[email] = { pass: p1, name: name, company: company };
-            localStorage.setItem('erp_core_users', JSON.stringify(db));
+            db[email] = { pass: p1, name: name };
+            localStorage.setItem('ecommerce_users', JSON.stringify(db));
             
-            showToast('Đăng ký thành công tài khoản Doanh nghiệp. Vui lòng đăng nhập.', 'success');
+            showToast('Đăng ký tài khoản thành công. Vui lòng đăng nhập.', 'success');
             document.getElementById('form-register').reset();
             setTimeout(() => {
                 switchMode('login');
@@ -623,16 +564,14 @@
 
                 let valid = false;
                 let userN = email;
-                let companyInfo = 'Quản trị viên Hệ thống';
 
                 if (email === 'admin' && pass === 'admin') {
-                    valid = true; userN = 'Quản trị viên (Admin)';
+                    valid = true; userN = 'Quản trị viên';
                 } else {
-                    let db = JSON.parse(localStorage.getItem('erp_core_users') || '{}');
+                    let db = JSON.parse(localStorage.getItem('ecommerce_users') || '{}');
                     if (db[email] && db[email].pass === pass) {
                         valid = true; 
                         userN = db[email].name;
-                        companyInfo = db[email].company;
                     }
                 }
 
@@ -640,7 +579,7 @@
                     document.getElementById('auth-flow').style.display = 'none';
                     const appFlow = document.getElementById('app-flow');
                     appFlow.style.display = 'block';
-                    document.getElementById('app-welcome').innerHTML = `Xin chào <strong style="color:var(--text-primary);">${userN}</strong> (${companyInfo})<br>Chào mừng bạn quay lại Hệ thống Quản trị Thủy Hải Sản.`;
+                    document.getElementById('app-welcome').innerHTML = `Xin chào <strong style="color:var(--text-primary);">${userN}</strong><br>Chào mừng bạn quay trở lại.`;
                 } else {
                     showToast('Sai tên đăng nhập hoặc mật khẩu.', 'error');
                 }
