@@ -4,10 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart ERP Seafood</title>
+    <title>Smart ERP Seafood - Authentication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
+        :root {
+            --bg-color: #0b1120;
+            --surface-color: rgba(30, 41, 59, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --input-bg: rgba(15, 23, 42, 0.6);
+            --input-border: rgba(51, 65, 85, 0.8);
+            --input-focus: #3b82f6;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,390 +30,604 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: #0f172a;
-            color: #f8fafc;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-image: radial-gradient(circle at 50% -20%, #1e293b, #0f172a);
-        }
-
-        .container {
-            display: flex;
-            gap: 30px;
-            max-width: 1000px;
-            width: 90%;
-            align-items: flex-start;
-        }
-
-        .info-card {
-            flex: 1;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(51, 65, 85, 0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .info-card h1 {
-            color: #38bdf8;
-            margin-bottom: 15px;
-            font-size: 2rem;
-            line-height: 1.2;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(34, 197, 94, 0.1);
-            color: #4ade80;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 14px;
-            border: 1px solid rgba(74, 222, 128, 0.2);
-            margin-bottom: 20px;
-        }
-
-        .badge::before {
-            content: '';
-            display: block;
-            width: 8px;
-            height: 8px;
-            background: #22c55e;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #22c55e;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-            70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
-
-        .info-card p {
-            color: #94a3b8;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .auth-portal {
-            flex: 1;
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             position: relative;
+        }
+
+        /* Ambient animated background */
+        .ambient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: #0b1120;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #3b82f6, transparent 70%);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #8b5cf6, transparent 70%);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        .auth-wrapper {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px;
+            perspective: 1000px;
+            z-index: 1;
+        }
+
+        .auth-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--surface-border);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .auth-header {
+            text-align: center;
+            padding: 40px 40px 20px 40px;
+        }
+
+        .auth-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .auth-header p {
+            color: var(--text-muted);
+            font-size: 15px;
         }
 
         .tabs {
             display: flex;
-            border-bottom: 1px solid #334155;
+            margin: 0 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 4px;
+            position: relative;
         }
 
-        .tab {
+        .tab-btn {
             flex: 1;
-            padding: 16px;
+            padding: 12px 0;
             text-align: center;
-            background: transparent;
             border: none;
-            color: #94a3b8;
-            font-size: 16px;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 15px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
+            border-radius: 8px;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
 
-        .tab.active {
-            color: #38bdf8;
-            border-bottom: 2px solid #38bdf8;
-            background: rgba(56, 189, 248, 0.05);
+        .tab-btn.active {
+            color: #fff;
         }
 
-        .tab:hover:not(.active) {
-            color: #cbd5e1;
-            background: rgba(255, 255, 255, 0.02);
+        .tab-slider {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: calc(50% - 4px);
+            height: calc(100% - 8px);
+            background: var(--surface-border);
+            border-radius: 8px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .form-container {
-            padding: 30px;
+            padding: 30px 40px 40px 40px;
+            position: relative;
+            min-height: 380px; /* To prevent height jumping */
         }
 
         .form-section {
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            right: 40px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .form-section.active {
-            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            position: relative;
+            top: 0;
+            left: 0;
+            right: 0;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+        .form-section.slide-left {
+            transform: translateX(-20px);
         }
 
-        .form-group {
+        .input-group {
             margin-bottom: 20px;
+            position: relative;
         }
 
-        .form-group label {
+        .input-group label {
             display: block;
             margin-bottom: 8px;
-            color: #cbd5e1;
             font-size: 14px;
             font-weight: 500;
+            color: var(--text-muted);
+            transition: color 0.3s;
         }
 
-        .form-group input {
+        .input-group input {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: 1px solid #475569;
-            background: #0f172a;
-            color: #f8fafc;
+            padding: 14px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            color: var(--text-main);
             font-size: 15px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: inherit;
+            transition: all 0.3s ease;
         }
 
-        .form-group input:focus {
+        .input-group input:focus {
             outline: none;
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: rgba(15, 23, 42, 0.8);
         }
 
-        .btn {
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            color: #fff;
+        }
+
+        /* Two column grid for register form */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--input-border);
+            border-radius: 4px;
+            background: var(--input-bg);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .forgot-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .forgot-link:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        .btn-submit {
             width: 100%;
             padding: 14px;
-            border: none;
-            border-radius: 8px;
-            background: #0ea5e9;
+            background: var(--primary);
             color: white;
+            border: none;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn:hover {
-            background: #0284c7;
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s;
         }
 
-        .btn:active {
-            transform: translateY(1px);
+        .btn-submit:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
         }
 
-        .btn-danger {
-            background: #ef4444;
+        .btn-submit:hover::after {
+            left: 100%;
         }
 
-        .btn-danger:hover {
-            background: #dc2626;
+        .btn-submit:active {
+            transform: translateY(0);
         }
 
-        .alert {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+        .alert-box {
+            padding: 12px 16px;
+            border-radius: 10px;
             font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
             display: none;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        .alert.error {
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .alert-error {
             background: rgba(239, 68, 68, 0.1);
-            color: #f87171;
+            color: #fca5a5;
             border: 1px solid rgba(239, 68, 68, 0.2);
-            display: block;
         }
 
-        .alert.success {
-            background: rgba(34, 197, 94, 0.1);
-            color: #4ade80;
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            display: block;
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
-        #dashboard {
+        /* Dashboard Styles */
+        #dashboard-view {
             display: none;
             text-align: center;
-            padding: 40px;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        #dashboard h2 {
-            color: #38bdf8;
-            margin-bottom: 15px;
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            color: var(--success);
+            font-size: 40px;
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
         }
 
-        #dashboard p {
-            color: #cbd5e1;
-            margin-bottom: 30px;
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--surface-border);
+            box-shadow: none;
+            margin-top: 10px;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            .info-card, .auth-portal {
-                width: 100%;
-            }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-muted);
+            box-shadow: none;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <!-- Info Card -->
-        <div class="info-card">
-            <h1>Smart ERP Seafood</h1>
-            <div class="badge">CI/CD System Live</div>
-            <p>Hệ thống Quản trị ERP chuyên sâu dành cho ngành chế biến và xuất khẩu Thủy Hải Sản. Nền tảng được tự động hóa quy trình CI/CD tích hợp Jenkins, GitHub Actions và Docker.</p>
-            <div style="background: rgba(15, 23, 42, 0.5); padding: 20px; border-radius: 12px; border: 1px solid #334155;">
-                <h3 style="color: #cbd5e1; margin-bottom: 10px; font-size: 16px;">Tính năng nổi bật:</h3>
-                <ul style="color: #94a3b8; list-style-position: inside; line-height: 1.8;">
-                    <li>Quản lý nguồn gốc và truy xuất nguyên liệu</li>
-                    <li>Theo dõi hàng tồn kho theo lô (Batch tracking)</li>
-                    <li>Tối ưu hóa quy trình chế biến và đóng gói</li>
-                    <li>Báo cáo kinh doanh theo thời gian thực</li>
-                </ul>
-            </div>
-        </div>
+    <!-- Background Animation -->
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
-        <!-- Auth Portal -->
-        <div class="auth-portal" id="auth-portal">
+    <div class="auth-wrapper">
+        <div class="auth-card" id="auth-card">
+            <div class="auth-header">
+                <h1>Smart ERP</h1>
+                <p>Hệ thống Quản trị Thủy Hải Sản</p>
+            </div>
+
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('login')">Đăng nhập</button>
-                <button class="tab" onclick="switchTab('register')">Đăng ký</button>
+                <div class="tab-slider" id="tab-slider"></div>
+                <button class="tab-btn active" onclick="switchTab('login')">Đăng nhập</button>
+                <button class="tab-btn" onclick="switchTab('register')">Đăng ký</button>
             </div>
 
             <div class="form-container">
-                <!-- Login Form -->
+                <!-- LOGIN FORM -->
                 <div id="login-section" class="form-section active">
-                    <div id="login-alert"></div>
+                    <div id="login-alert" class="alert-box"></div>
                     <form id="login-form" onsubmit="handleLogin(event)">
-                        <div class="form-group">
-                            <label for="login-username">Tên đăng nhập</label>
-                            <input type="text" id="login-username" required placeholder="Nhập tài khoản (VD: admin)">
+                        <div class="input-group">
+                            <label for="l-email">Tài khoản / Email</label>
+                            <input type="text" id="l-email" placeholder="Nhập admin hoặc email..." required autocomplete="off">
                         </div>
-                        <div class="form-group">
-                            <label for="login-password">Mật khẩu</label>
-                            <input type="password" id="login-password" required placeholder="Nhập mật khẩu">
+                        <div class="input-group">
+                            <label for="l-password">Mật khẩu</label>
+                            <input type="password" id="l-password" placeholder="••••••••" required>
                         </div>
-                        <button type="submit" class="btn">Đăng nhập</button>
+                        
+                        <div class="options-row">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="remember-me">
+                                <span>Ghi nhớ đăng nhập</span>
+                            </label>
+                            <a href="#" class="forgot-link">Quên mật khẩu?</a>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Đăng Nhập Ngay</button>
                     </form>
                 </div>
 
-                <!-- Register Form -->
+                <!-- REGISTER FORM -->
                 <div id="register-section" class="form-section">
-                    <div id="register-alert"></div>
+                    <div id="register-alert" class="alert-box"></div>
                     <form id="register-form" onsubmit="handleRegister(event)">
-                        <div class="form-group">
-                            <label for="reg-username">Tên đăng nhập</label>
-                            <input type="text" id="reg-username" required placeholder="Chọn tên đăng nhập">
+                        <div class="input-group">
+                            <label for="r-fullname">Họ và tên</label>
+                            <input type="text" id="r-fullname" placeholder="Vd: Nguyễn Văn A" required>
                         </div>
-                        <div class="form-group">
-                            <label for="reg-password">Mật khẩu</label>
-                            <input type="password" id="reg-password" required placeholder="Tạo mật khẩu">
+                        <div class="input-group">
+                            <label for="r-email">Email đăng nhập</label>
+                            <input type="email" id="r-email" placeholder="name@company.com" required>
                         </div>
-                        <button type="submit" class="btn">Đăng ký tài khoản</button>
+                        <div class="grid-2">
+                            <div class="input-group">
+                                <label for="r-password">Mật khẩu</label>
+                                <input type="password" id="r-password" placeholder="Tạo mật khẩu" required minlength="6">
+                            </div>
+                            <div class="input-group">
+                                <label for="r-confirm">Xác nhận</label>
+                                <input type="password" id="r-confirm" placeholder="Nhập lại" required minlength="6">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">Tạo Tài Khoản</button>
                     </form>
                 </div>
             </div>
         </div>
 
-        <!-- Dashboard -->
-        <div class="auth-portal" id="dashboard">
-            <h2>Đăng nhập thành công!</h2>
-            <p id="welcome-message">Xin chào! Bạn đã đăng nhập thành công vào phân hệ Quản trị Thủy Hải Sản.</p>
-            <button class="btn btn-danger" onclick="handleLogout()">Đăng xuất</button>
+        <!-- DASHBOARD VIEW (Shown after login) -->
+        <div class="auth-card" id="dashboard-view">
+            <div class="form-container" style="padding-top: 50px;">
+                <div class="success-icon">✓</div>
+                <h2 style="margin-bottom: 15px; font-size: 24px;">Đăng nhập thành công!</h2>
+                <p id="welcome-msg" style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.6;">
+                    Chào mừng bạn quay trở lại hệ thống Quản trị Smart ERP.
+                </p>
+                <button class="btn-submit" onclick="goToApp()">Truy cập hệ thống</button>
+                <button class="btn-submit btn-outline" onclick="handleLogout()">Đăng xuất</button>
+            </div>
         </div>
     </div>
 
     <script>
+        let currentTab = 'login';
+
         function switchTab(tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+            if (tab === currentTab) return;
             
-            document.getElementById('login-alert').className = 'alert';
-            document.getElementById('login-alert').innerHTML = '';
-            document.getElementById('register-alert').className = 'alert';
-            document.getElementById('register-alert').innerHTML = '';
+            const loginSec = document.getElementById('login-section');
+            const regSec = document.getElementById('register-section');
+            const slider = document.getElementById('tab-slider');
+            const btns = document.querySelectorAll('.tab-btn');
+
+            // Hide alerts
+            document.getElementById('login-alert').style.display = 'none';
+            document.getElementById('register-alert').style.display = 'none';
+
+            btns.forEach(b => b.classList.remove('active'));
 
             if (tab === 'login') {
-                document.querySelectorAll('.tab')[0].classList.add('active');
-                document.getElementById('login-section').classList.add('active');
+                slider.style.transform = 'translateX(0)';
+                btns[0].classList.add('active');
+                
+                regSec.classList.remove('active');
+                regSec.classList.add('slide-left');
+                
+                setTimeout(() => {
+                    loginSec.classList.remove('slide-left');
+                    loginSec.classList.add('active');
+                }, 50);
             } else {
-                document.querySelectorAll('.tab')[1].classList.add('active');
-                document.getElementById('register-section').classList.add('active');
+                slider.style.transform = 'translateX(calc(100% + 8px))';
+                btns[1].classList.add('active');
+                
+                loginSec.classList.remove('active');
+                loginSec.classList.add('slide-left');
+                
+                setTimeout(() => {
+                    regSec.classList.remove('slide-left');
+                    regSec.classList.add('active');
+                }, 50);
             }
+            currentTab = tab;
         }
 
-        function showAlert(id, message, type) {
-            const alertEl = document.getElementById(id);
-            alertEl.innerHTML = message;
-            alertEl.className = 'alert ' + type;
+        function showMessage(type, section, message) {
+            const alertBox = document.getElementById(`${section}-alert`);
+            alertBox.className = `alert-box alert-${type}`;
+            alertBox.innerHTML = message;
+            alertBox.style.display = 'block';
         }
 
         function handleRegister(e) {
             e.preventDefault();
-            const u = document.getElementById('reg-username').value.trim();
-            const p = document.getElementById('reg-password').value.trim();
+            const name = document.getElementById('r-fullname').value.trim();
+            const email = document.getElementById('r-email').value.trim();
+            const pass = document.getElementById('r-password').value;
+            const confirm = document.getElementById('r-confirm').value;
 
-            if (!u || !p) return;
-
-            let users = JSON.parse(localStorage.getItem('erp_users') || '{}');
-            
-            if (users[u] || u.toLowerCase() === 'admin') {
-                showAlert('register-alert', 'Tên đăng nhập đã tồn tại!', 'error');
+            if (pass !== confirm) {
+                showMessage('error', 'register', 'Mật khẩu xác nhận không khớp!');
                 return;
             }
 
-            users[u] = p;
-            localStorage.setItem('erp_users', JSON.stringify(users));
+            let users = JSON.parse(localStorage.getItem('smart_erp_users') || '{}');
             
-            showAlert('register-alert', 'Đăng ký thành công! Hãy chuyển sang Đăng nhập.', 'success');
+            if (users[email] || email === 'admin') {
+                showMessage('error', 'register', 'Email này đã được đăng ký!');
+                return;
+            }
+
+            users[email] = {
+                password: pass,
+                name: name
+            };
+            
+            localStorage.setItem('smart_erp_users', JSON.stringify(users));
+            showMessage('success', 'register', 'Đăng ký thành công! Vui lòng đăng nhập.');
             document.getElementById('register-form').reset();
+            
+            setTimeout(() => {
+                switchTab('login');
+                document.getElementById('l-email').value = email;
+            }, 1500);
         }
 
         function handleLogin(e) {
             e.preventDefault();
-            const u = document.getElementById('login-username').value.trim();
-            const p = document.getElementById('login-password').value.trim();
+            const email = document.getElementById('l-email').value.trim();
+            const pass = document.getElementById('l-password').value;
+            
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span style="display:inline-block; animation: spin 1s linear infinite;">↻</span> Đang xử lý...';
+            btn.style.opacity = '0.8';
 
-            if (!u || !p) return;
+            setTimeout(() => {
+                btn.innerHTML = 'Đăng Nhập Ngay';
+                btn.style.opacity = '1';
 
-            // Default admin check
-            let isValid = false;
-            if (u === 'admin' && p === 'admin') {
-                isValid = true;
-            } else {
-                let users = JSON.parse(localStorage.getItem('erp_users') || '{}');
-                if (users[u] === p) {
+                let isValid = false;
+                let userName = email;
+
+                // Hardcoded admin access
+                if (email === 'admin' && pass === 'admin') {
                     isValid = true;
+                    userName = 'Quản trị viên (Admin)';
+                } else {
+                    let users = JSON.parse(localStorage.getItem('smart_erp_users') || '{}');
+                    if (users[email] && users[email].password === pass) {
+                        isValid = true;
+                        userName = users[email].name;
+                    }
                 }
-            }
 
-            if (isValid) {
-                document.getElementById('auth-portal').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('welcome-message').innerText = `Xin chào, ${u}! Bạn đã đăng nhập thành công vào phân hệ Quản trị Thủy Hải Sản.`;
-                document.getElementById('login-form').reset();
-                document.getElementById('login-alert').className = 'alert';
-                document.getElementById('login-alert').innerHTML = '';
-            } else {
-                showAlert('login-alert', 'Sai tên đăng nhập hoặc mật khẩu!', 'error');
-            }
+                if (isValid) {
+                    document.getElementById('auth-card').style.display = 'none';
+                    document.getElementById('dashboard-view').style.display = 'block';
+                    document.getElementById('welcome-msg').innerHTML = `Xin chào <strong>${userName}</strong>, bạn đã đăng nhập thành công vào phân hệ Quản trị Thủy Hải Sản.`;
+                    document.getElementById('login-form').reset();
+                } else {
+                    showMessage('error', 'login', 'Tài khoản hoặc mật khẩu không chính xác!');
+                }
+            }, 800);
         }
 
         function handleLogout() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('auth-portal').style.display = 'block';
+            document.getElementById('dashboard-view').style.display = 'none';
+            document.getElementById('auth-card').style.display = 'block';
+            showMessage('success', 'login', 'Đã đăng xuất an toàn.');
         }
+
+        function goToApp() {
+            alert('Đang chuyển hướng vào hệ thống ERP...');
+            // window.location.href = '/dashboard';
+        }
+
+        // Add loading spinner animation to stylesheet dynamically
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes spin { 100% { transform: rotate(360deg); } }`;
+        document.head.appendChild(style);
     </script>
 </body>
 
