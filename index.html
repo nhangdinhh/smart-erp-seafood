@@ -1,634 +1,630 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart ERP Seafood - Authentication</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Smart ERP Seafood - Ultra Premium</title>
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Premium Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b1120;
-            --surface-color: rgba(30, 41, 59, 0.7);
-            --surface-border: rgba(255, 255, 255, 0.08);
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --primary-glow: rgba(59, 130, 246, 0.5);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --input-bg: rgba(15, 23, 42, 0.6);
-            --input-border: rgba(51, 65, 85, 0.8);
-            --input-focus: #3b82f6;
-            --danger: #ef4444;
-            --success: #10b981;
+            --bg: #050505;
+            --surface: rgba(20, 20, 22, 0.4);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --accent-1: #00f2fe;
+            --accent-2: #4facfe;
+            --accent-3: #8b5cf6;
+            --input-bg: rgba(255, 255, 255, 0.03);
+            --input-focus: rgba(255, 255, 255, 0.08);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             overflow: hidden;
+            perspective: 1000px; /* Enable 3D depth for the card tilt */
+        }
+
+        /* -----------------------
+           The Aurora Background 
+           ----------------------- */
+        .aurora-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            background: #000;
+        }
+
+        .aurora-blob {
+            position: absolute;
+            filter: blur(90px);
+            opacity: 0.5;
+            animation: pulse-blob 15s infinite alternate linear;
+            border-radius: 50%;
+        }
+
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--accent-3), transparent 60%); animation-delay: 0s; }
+        .blob-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, var(--accent-1), transparent 60%); animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; background: radial-gradient(circle, var(--accent-2), transparent 50%); animation-delay: -10s; }
+
+        @keyframes pulse-blob {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.2) translate(5%, 10%); }
+            100% { transform: scale(0.9) translate(-5%, -5%); }
+        }
+
+        /* Star grid overlay */
+        .grid-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
+        }
+
+        /* -----------------------
+           3D Glass Card Container
+           ----------------------- */
+        .auth-container {
             position: relative;
-        }
-
-        /* Ambient animated background */
-        .ambient-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            background: #0b1120;
-        }
-
-        .blob {
-            position: absolute;
-            filter: blur(80px);
-            opacity: 0.6;
-            animation: float 10s infinite alternate ease-in-out;
-        }
-
-        .blob-1 {
-            top: -10%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, #3b82f6, transparent 70%);
-            animation-delay: 0s;
-        }
-
-        .blob-2 {
-            bottom: -20%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, #8b5cf6, transparent 70%);
-            animation-delay: -5s;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.1); }
-        }
-
-        .auth-wrapper {
+            z-index: 10;
             width: 100%;
-            max-width: 480px;
+            max-width: 460px;
             padding: 20px;
-            perspective: 1000px;
-            z-index: 1;
+            transform-style: preserve-3d;
         }
 
         .auth-card {
-            background: var(--surface-color);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--surface-border);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            position: relative;
+            background: var(--surface);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 28px;
+            padding: 50px 40px;
+            box-shadow: 
+                0 0 0 1px var(--border),
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateZ(0);
+            transition: transform 0.1s ease-out; /* Smooth transition when mouse leaves */
         }
 
         .auth-header {
             text-align: center;
-            padding: 40px 40px 20px 40px;
+            margin-bottom: 35px;
+            transform: translateZ(30px); /* Popping out effect */
+        }
+
+        .auth-header .logo-icon {
+            font-size: 48px;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 10px rgba(0,242,254,0.3));
         }
 
         .auth-header h1 {
             font-size: 28px;
             font-weight: 700;
-            background: linear-gradient(135deg, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
             margin-bottom: 8px;
         }
 
         .auth-header p {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             font-size: 15px;
+            font-weight: 400;
         }
 
-        .tabs {
+        /* Segmented Control / Tabs */
+        .segmented-control {
             display: flex;
-            margin: 0 40px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            padding: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 14px;
+            padding: 5px;
+            margin-bottom: 35px;
             position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: translateZ(20px);
         }
 
-        .tab-btn {
+        .segment-btn {
             flex: 1;
             padding: 12px 0;
             text-align: center;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            font-size: 15px;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .tab-btn.active {
-            color: #fff;
-        }
-
-        .tab-slider {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            width: calc(50% - 4px);
-            height: calc(100% - 8px);
-            background: var(--surface-border);
-            border-radius: 8px;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-container {
-            padding: 30px 40px 40px 40px;
-            position: relative;
-            min-height: 380px; /* To prevent height jumping */
-        }
-
-        .form-section {
-            position: absolute;
-            top: 30px;
-            left: 40px;
-            right: 40px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateX(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .form-section.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
-            position: relative;
-            top: 0;
-            left: 0;
-            right: 0;
-        }
-
-        .form-section.slide-left {
-            transform: translateX(-20px);
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
+            color: var(--text-secondary);
             font-size: 14px;
-            font-weight: 500;
-            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 2;
             transition: color 0.3s;
         }
 
-        .input-group input {
+        .segment-btn.active { color: var(--text-primary); }
+
+        .segment-highlight {
+            position: absolute;
+            top: 5px; left: 5px;
+            width: calc(50% - 5px); height: calc(100% - 10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Forms Area */
+        .forms-wrapper {
+            position: relative;
+            min-height: 290px;
+            transform: translateZ(20px);
+        }
+
+        .form-panel {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .form-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+            position: relative;
+        }
+
+        /* Inputs */
+        .input-box {
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        .input-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 22px;
+            transition: 0.3s;
+        }
+
+        .input-box input {
             width: 100%;
-            padding: 14px 16px;
+            padding: 18px 18px 18px 52px;
             background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            border-radius: 12px;
-            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: var(--text-primary);
             font-size: 15px;
             font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .input-group input:focus {
             outline: none;
-            border-color: var(--input-focus);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-            background: rgba(15, 23, 42, 0.8);
+            transition: all 0.3s;
         }
 
-        .input-group input:focus + label,
-        .input-group input:not(:placeholder-shown) + label {
-            color: #fff;
+        .input-box input::placeholder {
+            color: transparent;
         }
 
-        /* Two column grid for register form */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+        .input-box label {
+            position: absolute;
+            left: 52px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 15px;
+            pointer-events: none;
+            transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .options-row {
+        .input-box input:focus,
+        .input-box input:not(:placeholder-shown) {
+            background: var(--input-focus);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.03);
+        }
+
+        .input-box input:focus ~ label,
+        .input-box input:not(:placeholder-shown) ~ label {
+            top: -12px;
+            left: 15px;
+            font-size: 12px;
+            background: #050505; /* Fallback for unsupported browsers */
+            background: linear-gradient(to bottom, transparent, rgba(20, 20, 22, 0.8) 50%, rgba(20, 20, 22, 0.9));
+            padding: 0 8px;
+            color: var(--accent-1);
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .input-box input:focus ~ i {
+            color: var(--accent-1);
+        }
+
+        /* Additional Form Elements */
+        .meta-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 25px;
             font-size: 14px;
+            transform: translateZ(10px);
         }
 
-        .checkbox-wrapper {
+        .custom-check {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
-            color: var(--text-muted);
+            color: var(--text-secondary);
+            user-select: none;
         }
 
-        .checkbox-wrapper input[type="checkbox"] {
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border: 1px solid var(--input-border);
-            border-radius: 4px;
+        .custom-check input { display: none; }
+        .checkmark {
+            width: 20px; height: 20px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            display: flex; justify-content: center; align-items: center;
             background: var(--input-bg);
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s;
+            transition: 0.2s;
         }
-
-        .checkbox-wrapper input[type="checkbox"]:checked {
-            background: var(--primary);
-            border-color: var(--primary);
+        .custom-check input:checked + .checkmark {
+            background: var(--accent-2);
+            border-color: var(--accent-2);
         }
-
-        .checkbox-wrapper input[type="checkbox"]:checked::after {
-            content: '✓';
-            position: absolute;
+        .custom-check input:checked + .checkmark::after {
+            content: '\eb7a'; /* Boxicons check mark */
+            font-family: 'boxicons';
             color: white;
-            font-size: 12px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .forgot-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .forgot-link:hover {
-            color: var(--primary-hover);
-            text-decoration: underline;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
             font-size: 16px;
-            font-weight: 600;
+        }
+
+        .forgot-pass {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .forgot-pass:hover { color: var(--accent-1); }
+
+        /* Premium Submit Button */
+        .btn-glow {
+            width: 100%;
+            padding: 18px;
+            border-radius: 14px;
+            border: none;
             font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px var(--primary-glow);
             position: relative;
             overflow: hidden;
-        }
-
-        .btn-submit::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: all 0.5s;
-        }
-
-        .btn-submit:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-        }
-
-        .btn-submit:hover::after {
-            left: 100%;
-        }
-
-        .btn-submit:active {
-            transform: translateY(0);
-        }
-
-        .alert-box {
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 20px;
-            display: none;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: #fca5a5;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        .alert-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: #6ee7b7;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        /* Dashboard Styles */
-        #dashboard-view {
-            display: none;
-            text-align: center;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        .success-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 50%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+            transform: translateZ(25px);
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 auto 20px;
-            color: var(--success);
-            font-size: 40px;
-            border: 2px solid rgba(16, 185, 129, 0.3);
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+            gap: 8px;
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--surface-border);
-            box-shadow: none;
-            margin-top: 10px;
+        .btn-glow i {
+            font-size: 20px;
+            transition: transform 0.3s;
         }
 
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--text-muted);
-            box-shadow: none;
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-2px) translateZ(25px);
+            box-shadow: 0 12px 30px rgba(79, 172, 254, 0.4);
+        }
+        
+        .btn-glow:hover i { transform: translateX(5px); }
+        .btn-glow:hover::before { left: 100%; }
+        .btn-glow:active { transform: translateY(1px) translateZ(20px); }
+
+        /* Mini Alert Toast (Modern replacement for Alert Boxes) */
+        .toast {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            padding: 16px 24px;
+            background: rgba(15, 15, 18, 0.85);
+            backdrop-filter: blur(12px);
+            border-left: 4px solid var(--accent-1);
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast i { font-size: 24px; }
+        .toast.show { transform: translateX(0); }
+        .toast.error { border-color: #ef4444; }
+        .toast.error i { color: #ef4444; }
+        .toast.success { border-color: #10b981; }
+        .toast.success i { color: #10b981; }
+
+        /* Dashboard */
+        .dashboard-content {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+            transform: translateZ(30px);
+        }
+        .dashboard-content i.bx-check-shield {
+            font-size: 80px;
+            color: #10b981;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+            animation: pulse-success 2s infinite alternate;
+        }
+
+        @keyframes pulse-success {
+            0% { transform: scale(1); filter: brightness(1); }
+            100% { transform: scale(1.05); filter: brightness(1.2); }
         }
     </style>
 </head>
-
 <body>
-    <!-- Background Animation -->
-    <div class="ambient-bg">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
+
+    <!-- 1. Ambient Background -->
+    <div class="aurora-container">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+        <div class="grid-overlay"></div>
     </div>
 
-    <div class="auth-wrapper">
-        <div class="auth-card" id="auth-card">
-            <div class="auth-header">
-                <h1>Smart ERP</h1>
-                <p>Hệ thống Quản trị Thủy Hải Sản</p>
-            </div>
+    <!-- 2. Dynamic Toast Notification -->
+    <div class="toast" id="toast">
+        <i class='bx bx-info-circle' id="toast-icon"></i>
+        <span id="toast-msg">Message</span>
+    </div>
 
-            <div class="tabs">
-                <div class="tab-slider" id="tab-slider"></div>
-                <button class="tab-btn active" onclick="switchTab('login')">Đăng nhập</button>
-                <button class="tab-btn" onclick="switchTab('register')">Đăng ký</button>
-            </div>
+    <!-- 3. The 3D Card -->
+    <div class="auth-container" id="tilt-box">
+        <div class="auth-card">
+            
+            <div id="auth-flow">
+                <div class="auth-header">
+                    <i class='bx bxl-sketch logo-icon'></i>
+                    <h1>Smart ERP Core</h1>
+                    <p>Enter the ecosystem</p>
+                </div>
 
-            <div class="form-container">
-                <!-- LOGIN FORM -->
-                <div id="login-section" class="form-section active">
-                    <div id="login-alert" class="alert-box"></div>
-                    <form id="login-form" onsubmit="handleLogin(event)">
-                        <div class="input-group">
-                            <label for="l-email">Tài khoản / Email</label>
-                            <input type="text" id="l-email" placeholder="Nhập admin hoặc email..." required autocomplete="off">
+                <div class="segmented-control">
+                    <div class="segment-highlight" id="seg-high"></div>
+                    <div class="segment-btn active" onclick="switchMode('login')">Sign In</div>
+                    <div class="segment-btn" onclick="switchMode('register')">Create Account</div>
+                </div>
+
+                <div class="forms-wrapper">
+                    <!-- Login Form -->
+                    <form class="form-panel active" id="form-login" onsubmit="doLogin(event)">
+                        <div class="input-box">
+                            <i class='bx bx-envelope'></i>
+                            <input type="text" id="l-uid" placeholder="Email" required autocomplete="off">
+                            <label>Account ID / Email</label>
                         </div>
-                        <div class="input-group">
-                            <label for="l-password">Mật khẩu</label>
-                            <input type="password" id="l-password" placeholder="••••••••" required>
+                        <div class="input-box">
+                            <i class='bx bx-lock-alt'></i>
+                            <input type="password" id="l-pwd" placeholder="Password" required>
+                            <label>Password</label>
                         </div>
-                        
-                        <div class="options-row">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox" id="remember-me">
-                                <span>Ghi nhớ đăng nhập</span>
+                        <div class="meta-actions">
+                            <label class="custom-check">
+                                <input type="checkbox">
+                                <div class="checkmark"></div>
+                                Keep me logged in
                             </label>
-                            <a href="#" class="forgot-link">Quên mật khẩu?</a>
+                            <a href="#" class="forgot-pass">Recover password?</a>
                         </div>
-
-                        <button type="submit" class="btn-submit">Đăng Nhập Ngay</button>
+                        <button type="submit" class="btn-glow" id="btn-login-submit">Authenticate <i class='bx bx-right-arrow-alt'></i></button>
                     </form>
-                </div>
 
-                <!-- REGISTER FORM -->
-                <div id="register-section" class="form-section">
-                    <div id="register-alert" class="alert-box"></div>
-                    <form id="register-form" onsubmit="handleRegister(event)">
-                        <div class="input-group">
-                            <label for="r-fullname">Họ và tên</label>
-                            <input type="text" id="r-fullname" placeholder="Vd: Nguyễn Văn A" required>
+                    <!-- Register Form -->
+                    <form class="form-panel" id="form-register" onsubmit="doRegister(event)">
+                        <div class="input-box">
+                            <i class='bx bx-user'></i>
+                            <input type="text" id="r-name" placeholder="Name" required>
+                            <label>Full Name</label>
                         </div>
-                        <div class="input-group">
-                            <label for="r-email">Email đăng nhập</label>
-                            <input type="email" id="r-email" placeholder="name@company.com" required>
+                        <div class="input-box">
+                            <i class='bx bx-envelope'></i>
+                            <input type="email" id="r-email" placeholder="Email" required>
+                            <label>Work Email</label>
                         </div>
-                        <div class="grid-2">
-                            <div class="input-group">
-                                <label for="r-password">Mật khẩu</label>
-                                <input type="password" id="r-password" placeholder="Tạo mật khẩu" required minlength="6">
+                        <div style="display: flex; gap: 15px;">
+                            <div class="input-box" style="flex:1;">
+                                <i class='bx bx-lock-alt'></i>
+                                <input type="password" id="r-pwd" placeholder="Pass" required minlength="6">
+                                <label>Password</label>
                             </div>
-                            <div class="input-group">
-                                <label for="r-confirm">Xác nhận</label>
-                                <input type="password" id="r-confirm" placeholder="Nhập lại" required minlength="6">
+                            <div class="input-box" style="flex:1;">
+                                <i class='bx bx-check-shield'></i>
+                                <input type="password" id="r-repwd" placeholder="Verify" required minlength="6">
+                                <label>Verify</label>
                             </div>
                         </div>
-                        
-                        <button type="submit" class="btn-submit">Tạo Tài Khoản</button>
+                        <button type="submit" class="btn-glow">Initialize Account <i class='bx bx-rocket'></i></button>
                     </form>
                 </div>
             </div>
-        </div>
 
-        <!-- DASHBOARD VIEW (Shown after login) -->
-        <div class="auth-card" id="dashboard-view">
-            <div class="form-container" style="padding-top: 50px;">
-                <div class="success-icon">✓</div>
-                <h2 style="margin-bottom: 15px; font-size: 24px;">Đăng nhập thành công!</h2>
-                <p id="welcome-msg" style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.6;">
-                    Chào mừng bạn quay trở lại hệ thống Quản trị Smart ERP.
-                </p>
-                <button class="btn-submit" onclick="goToApp()">Truy cập hệ thống</button>
-                <button class="btn-submit btn-outline" onclick="handleLogout()">Đăng xuất</button>
+            <!-- Dashboard App View (After login) -->
+            <div id="app-flow" class="dashboard-content">
+                <i class='bx bx-check-shield'></i>
+                <h2 style="margin-bottom: 12px; font-weight: 700;">Secure Connection Established</h2>
+                <p id="app-welcome" style="color: var(--text-secondary); margin-bottom: 35px; font-size: 16px; line-height: 1.6;"></p>
+                <button class="btn-glow" onclick="window.location.reload()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); box-shadow: none;">Terminate Session <i class='bx bx-exit'></i></button>
             </div>
+
         </div>
     </div>
 
     <script>
-        let currentTab = 'login';
-
-        function switchTab(tab) {
-            if (tab === currentTab) return;
+        // 1. 3D Tilt Effect on mousemove
+        const tiltBox = document.getElementById('tilt-box');
+        
+        document.addEventListener('mousemove', (e) => {
+            const x = window.innerWidth / 2 - e.pageX;
+            const y = window.innerHeight / 2 - e.pageY;
             
-            const loginSec = document.getElementById('login-section');
-            const regSec = document.getElementById('register-section');
-            const slider = document.getElementById('tab-slider');
-            const btns = document.querySelectorAll('.tab-btn');
+            // Limit the tilt angle to 15 degrees max
+            const maxTilt = 15;
+            const tiltX = Math.max(Math.min((y / window.innerHeight) * 30, maxTilt), -maxTilt);
+            const tiltY = Math.max(Math.min(-(x / window.innerWidth) * 30, maxTilt), -maxTilt);
 
-            // Hide alerts
-            document.getElementById('login-alert').style.display = 'none';
-            document.getElementById('register-alert').style.display = 'none';
+            tiltBox.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+        });
+
+        // Snap back to 0 when mouse leaves window
+        document.addEventListener('mouseleave', () => {
+            tiltBox.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
+        // 2. Tab Switching Logic
+        function switchMode(mode) {
+            const high = document.getElementById('seg-high');
+            const btns = document.querySelectorAll('.segment-btn');
+            const loginF = document.getElementById('form-login');
+            const regF = document.getElementById('form-register');
 
             btns.forEach(b => b.classList.remove('active'));
 
-            if (tab === 'login') {
-                slider.style.transform = 'translateX(0)';
+            if(mode === 'login') {
+                high.style.transform = 'translateX(0)';
                 btns[0].classList.add('active');
                 
-                regSec.classList.remove('active');
-                regSec.classList.add('slide-left');
-                
-                setTimeout(() => {
-                    loginSec.classList.remove('slide-left');
-                    loginSec.classList.add('active');
-                }, 50);
+                regF.classList.remove('active');
+                setTimeout(() => loginF.classList.add('active'), 200);
             } else {
-                slider.style.transform = 'translateX(calc(100% + 8px))';
+                high.style.transform = 'translateX(100%)';
                 btns[1].classList.add('active');
-                
-                loginSec.classList.remove('active');
-                loginSec.classList.add('slide-left');
-                
-                setTimeout(() => {
-                    regSec.classList.remove('slide-left');
-                    regSec.classList.add('active');
-                }, 50);
+
+                loginF.classList.remove('active');
+                setTimeout(() => regF.classList.add('active'), 200);
             }
-            currentTab = tab;
         }
 
-        function showMessage(type, section, message) {
-            const alertBox = document.getElementById(`${section}-alert`);
-            alertBox.className = `alert-box alert-${type}`;
-            alertBox.innerHTML = message;
-            alertBox.style.display = 'block';
+        // 3. Elegant Toast Notifications
+        let toastTimeout;
+        function showToast(msg, type = 'info') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            
+            toast.className = `toast show ${type}`;
+            document.getElementById('toast-msg').innerText = msg;
+
+            if(type === 'error') icon.className = 'bx bx-error-circle';
+            else if(type === 'success') icon.className = 'bx bx-check-circle';
+            else icon.className = 'bx bx-info-circle';
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
         }
 
-        function handleRegister(e) {
+        // 4. Core Logic
+        function doRegister(e) {
             e.preventDefault();
-            const name = document.getElementById('r-fullname').value.trim();
-            const email = document.getElementById('r-email').value.trim();
-            const pass = document.getElementById('r-password').value;
-            const confirm = document.getElementById('r-confirm').value;
+            const name = document.getElementById('r-name').value;
+            const email = document.getElementById('r-email').value;
+            const p1 = document.getElementById('r-pwd').value;
+            const p2 = document.getElementById('r-repwd').value;
 
-            if (pass !== confirm) {
-                showMessage('error', 'register', 'Mật khẩu xác nhận không khớp!');
-                return;
-            }
+            if (p1 !== p2) return showToast('Security mismatch. Passwords do not match.', 'error');
+            
+            let db = JSON.parse(localStorage.getItem('erp_core_users') || '{}');
+            if (db[email] || email === 'admin') return showToast('Identifier already exists in matrix.', 'error');
 
-            let users = JSON.parse(localStorage.getItem('smart_erp_users') || '{}');
+            db[email] = { pass: p1, name: name };
+            localStorage.setItem('erp_core_users', JSON.stringify(db));
             
-            if (users[email] || email === 'admin') {
-                showMessage('error', 'register', 'Email này đã được đăng ký!');
-                return;
-            }
-
-            users[email] = {
-                password: pass,
-                name: name
-            };
-            
-            localStorage.setItem('smart_erp_users', JSON.stringify(users));
-            showMessage('success', 'register', 'Đăng ký thành công! Vui lòng đăng nhập.');
-            document.getElementById('register-form').reset();
-            
+            showToast('Authorization granted. Identity registered.', 'success');
+            document.getElementById('form-register').reset();
             setTimeout(() => {
-                switchTab('login');
-                document.getElementById('l-email').value = email;
+                switchMode('login');
+                document.getElementById('l-uid').value = email;
             }, 1500);
         }
 
-        function handleLogin(e) {
+        function doLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('l-email').value.trim();
-            const pass = document.getElementById('l-password').value;
+            const email = document.getElementById('l-uid').value;
+            const pass = document.getElementById('l-pwd').value;
+            const btn = document.getElementById('btn-login-submit');
             
-            const btn = e.target.querySelector('button[type="submit"]');
-            btn.innerHTML = '<span style="display:inline-block; animation: spin 1s linear infinite;">↻</span> Đang xử lý...';
-            btn.style.opacity = '0.8';
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "<i class='bx bx-loader-alt bx-spin' style='font-size:20px; margin-right:8px;'></i> Processing...";
+            btn.style.opacity = 0.7;
 
             setTimeout(() => {
-                btn.innerHTML = 'Đăng Nhập Ngay';
-                btn.style.opacity = '1';
+                btn.innerHTML = originalText;
+                btn.style.opacity = 1;
 
-                let isValid = false;
-                let userName = email;
+                let valid = false;
+                let userN = email;
 
-                // Hardcoded admin access
                 if (email === 'admin' && pass === 'admin') {
-                    isValid = true;
-                    userName = 'Quản trị viên (Admin)';
+                    valid = true; userN = 'Super Administrator';
                 } else {
-                    let users = JSON.parse(localStorage.getItem('smart_erp_users') || '{}');
-                    if (users[email] && users[email].password === pass) {
-                        isValid = true;
-                        userName = users[email].name;
+                    let db = JSON.parse(localStorage.getItem('erp_core_users') || '{}');
+                    if (db[email] && db[email].pass === pass) {
+                        valid = true; userN = db[email].name;
                     }
                 }
 
-                if (isValid) {
-                    document.getElementById('auth-card').style.display = 'none';
-                    document.getElementById('dashboard-view').style.display = 'block';
-                    document.getElementById('welcome-msg').innerHTML = `Xin chào <strong>${userName}</strong>, bạn đã đăng nhập thành công vào phân hệ Quản trị Thủy Hải Sản.`;
-                    document.getElementById('login-form').reset();
+                if (valid) {
+                    document.getElementById('auth-flow').style.display = 'none';
+                    const appFlow = document.getElementById('app-flow');
+                    appFlow.style.display = 'block';
+                    document.getElementById('app-welcome').innerHTML = `Identity verified: <strong style="color:var(--text-primary);">${userN}</strong><br>Welcome to the Seafood ERP Command Center.`;
                 } else {
-                    showMessage('error', 'login', 'Tài khoản hoặc mật khẩu không chính xác!');
+                    showToast('Access Denied. Invalid credentials.', 'error');
                 }
-            }, 800);
+            }, 1200);
         }
-
-        function handleLogout() {
-            document.getElementById('dashboard-view').style.display = 'none';
-            document.getElementById('auth-card').style.display = 'block';
-            showMessage('success', 'login', 'Đã đăng xuất an toàn.');
-        }
-
-        function goToApp() {
-            alert('Đang chuyển hướng vào hệ thống ERP...');
-            // window.location.href = '/dashboard';
-        }
-
-        // Add loading spinner animation to stylesheet dynamically
-        const style = document.createElement('style');
-        style.innerHTML = `@keyframes spin { 100% { transform: rotate(360deg); } }`;
-        document.head.appendChild(style);
     </script>
 </body>
-
 </html>
