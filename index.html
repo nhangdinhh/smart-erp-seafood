@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart ERP Seafood - Ultra Premium</title>
+    <title>Smart ERP Seafood - Đăng nhập</title>
     <!-- Premium Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Premium Icons -->
@@ -11,8 +11,8 @@
     <style>
         :root {
             --bg: #050505;
-            --surface: rgba(20, 20, 22, 0.4);
-            --border: rgba(255, 255, 255, 0.08);
+            --surface: rgba(20, 20, 22, 0.45);
+            --border: rgba(255, 255, 255, 0.1);
             --text-primary: #ffffff;
             --text-secondary: #a1a1aa;
             --accent-1: #00f2fe;
@@ -20,6 +20,7 @@
             --accent-3: #8b5cf6;
             --input-bg: rgba(255, 255, 255, 0.03);
             --input-focus: rgba(255, 255, 255, 0.08);
+            --danger: #ef4444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,21 +33,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            perspective: 1000px;
+            overflow-x: hidden;
+            padding: 40px 20px;
         }
 
+        /* -----------------------
+           The Aurora Background 
+           ----------------------- */
         .aurora-container {
-            position: absolute;
+            position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             overflow: hidden;
-            z-index: 0;
+            z-index: -1;
             background: #000;
         }
 
         .aurora-blob {
             position: absolute;
-            filter: blur(90px);
+            filter: blur(100px);
             opacity: 0.5;
             animation: pulse-blob 15s infinite alternate linear;
             border-radius: 50%;
@@ -62,6 +66,7 @@
             100% { transform: scale(0.9) translate(-5%, -5%); }
         }
 
+        /* Star grid overlay */
         .grid-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -74,13 +79,14 @@
             -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
         }
 
+        /* -----------------------
+           Glass Card Container
+           ----------------------- */
         .auth-container {
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 460px;
-            padding: 20px;
-            transform-style: preserve-3d;
+            max-width: 580px; /* Tăng chiều rộng để form nhìn đẹp hơn khi nhiều trường */
         }
 
         .auth-card {
@@ -93,31 +99,21 @@
                 0 0 0 1px var(--border),
                 0 30px 60px rgba(0, 0, 0, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transform: translateZ(0);
-            transition: transform 0.1s ease-out;
         }
 
         .auth-header {
             text-align: center;
             margin-bottom: 35px;
-            transform: translateZ(30px);
-        }
-
-        .auth-header .logo-icon {
-            font-size: 48px;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            display: inline-block;
-            filter: drop-shadow(0 4px 10px rgba(0,242,254,0.3));
         }
 
         .auth-header h1 {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
             letter-spacing: -0.5px;
             margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .auth-header p {
@@ -126,6 +122,7 @@
             font-weight: 400;
         }
 
+        /* Segmented Control / Tabs */
         .segmented-control {
             display: flex;
             background: rgba(0, 0, 0, 0.3);
@@ -134,7 +131,6 @@
             margin-bottom: 35px;
             position: relative;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-            transform: translateZ(20px);
         }
 
         .segment-btn {
@@ -164,10 +160,10 @@
             backdrop-filter: blur(10px);
         }
 
+        /* Forms Area */
         .forms-wrapper {
             position: relative;
-            min-height: 290px;
-            transform: translateZ(20px);
+            min-height: 420px;
         }
 
         .form-panel {
@@ -175,17 +171,29 @@
             top: 0; left: 0; width: 100%;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(15px) scale(0.95);
+            transform: translateY(15px);
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .form-panel.active {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
             position: relative;
         }
 
+        /* Form Grid for Register */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 16px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        /* Inputs */
         .input-box {
             position: relative;
             margin-bottom: 22px;
@@ -197,18 +205,18 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
-            font-size: 22px;
+            font-size: 20px;
             transition: 0.3s;
         }
 
         .input-box input {
             width: 100%;
-            padding: 18px 18px 18px 52px;
+            padding: 16px 16px 16px 52px;
             background: var(--input-bg);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 12px;
             color: var(--text-primary);
-            font-size: 15px;
+            font-size: 14px;
             font-family: inherit;
             outline: none;
             transition: all 0.3s;
@@ -224,7 +232,7 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
-            font-size: 15px;
+            font-size: 14px;
             pointer-events: none;
             transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -238,11 +246,10 @@
 
         .input-box input:focus ~ label,
         .input-box input:not(:placeholder-shown) ~ label {
-            top: -12px;
+            top: -10px;
             left: 15px;
             font-size: 12px;
-            background: #050505; 
-            background: linear-gradient(to bottom, transparent, rgba(20, 20, 22, 0.8) 50%, rgba(20, 20, 22, 0.9));
+            background: #141416; 
             padding: 0 8px;
             color: var(--accent-1);
             border-radius: 4px;
@@ -253,13 +260,13 @@
             color: var(--accent-1);
         }
 
+        /* Checkbox & Links */
         .meta-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
             font-size: 14px;
-            transform: translateZ(10px);
         }
 
         .custom-check {
@@ -273,9 +280,9 @@
 
         .custom-check input { display: none; }
         .checkmark {
-            width: 20px; height: 20px;
+            width: 18px; height: 18px;
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 5px;
             display: flex; justify-content: center; align-items: center;
             background: var(--input-bg);
             transition: 0.2s;
@@ -288,7 +295,7 @@
             content: '\eb7a'; 
             font-family: 'boxicons';
             color: white;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .forgot-pass {
@@ -296,16 +303,17 @@
             text-decoration: none;
             transition: color 0.2s;
         }
-        .forgot-pass:hover { color: var(--accent-1); }
+        .forgot-pass:hover { color: var(--accent-1); text-decoration: underline;}
 
+        /* Premium Submit Button */
         .btn-glow {
             width: 100%;
             padding: 18px;
-            border-radius: 14px;
+            border-radius: 12px;
             border: none;
             font-family: inherit;
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 15px;
+            font-weight: 600;
             color: white;
             background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
             cursor: pointer;
@@ -313,11 +321,11 @@
             overflow: hidden;
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
-            transform: translateZ(25px);
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 8px;
+            margin-top: 10px;
         }
 
         .btn-glow i {
@@ -334,26 +342,27 @@
         }
 
         .btn-glow:hover {
-            transform: translateY(-2px) translateZ(25px);
+            transform: translateY(-2px);
             box-shadow: 0 12px 30px rgba(79, 172, 254, 0.4);
         }
         
         .btn-glow:hover i { transform: translateX(5px); }
         .btn-glow:hover::before { left: 100%; }
-        .btn-glow:active { transform: translateY(1px) translateZ(20px); }
+        .btn-glow:active { transform: translateY(1px); }
 
+        /* Mini Alert Toast */
         .toast {
             position: fixed;
             top: 40px;
             right: 40px;
             padding: 16px 24px;
-            background: rgba(15, 15, 18, 0.85);
+            background: rgba(20, 20, 24, 0.95);
             backdrop-filter: blur(12px);
             border-left: 4px solid var(--accent-1);
-            border-radius: 12px;
+            border-radius: 10px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             color: white;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transform: translateX(120%);
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -363,18 +372,18 @@
             gap: 12px;
         }
 
-        .toast i { font-size: 24px; }
+        .toast i { font-size: 22px; }
         .toast.show { transform: translateX(0); }
-        .toast.error { border-color: #ef4444; }
-        .toast.error i { color: #ef4444; }
+        .toast.error { border-color: var(--danger); }
+        .toast.error i { color: var(--danger); }
         .toast.success { border-color: #10b981; }
         .toast.success i { color: #10b981; }
 
+        /* Dashboard */
         .dashboard-content {
             display: none;
             text-align: center;
             padding: 20px 0;
-            transform: translateZ(30px);
         }
         .dashboard-content i.bx-check-shield {
             font-size: 80px;
@@ -388,10 +397,20 @@
             0% { transform: scale(1); filter: brightness(1); }
             100% { transform: scale(1.05); filter: brightness(1.2); }
         }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Ambient Background -->
     <div class="aurora-container">
         <div class="aurora-blob blob-1"></div>
         <div class="aurora-blob blob-2"></div>
@@ -399,34 +418,40 @@
         <div class="grid-overlay"></div>
     </div>
 
+    <!-- Toast Notification -->
     <div class="toast" id="toast">
         <i class='bx bx-info-circle' id="toast-icon"></i>
         <span id="toast-msg">Thông báo</span>
     </div>
 
-    <div class="auth-container" id="tilt-box">
+    <!-- Card -->
+    <div class="auth-container">
         <div class="auth-card">
             
             <div id="auth-flow">
                 <div class="auth-header">
-                    <i class='bx bxl-sketch logo-icon'></i>
                     <h1>Hệ thống Smart ERP</h1>
-                    <p>Đăng nhập vào hệ thống quản trị</p>
+                    <p>Phân hệ Quản trị Thủy Hải Sản</p>
                 </div>
 
                 <div class="segmented-control">
                     <div class="segment-highlight" id="seg-high"></div>
                     <div class="segment-btn active" onclick="switchMode('login')">Đăng nhập</div>
-                    <div class="segment-btn" onclick="switchMode('register')">Đăng ký</div>
+                    <div class="segment-btn" onclick="switchMode('register')">Đăng ký mới</div>
                 </div>
 
                 <div class="forms-wrapper">
                     <!-- Login Form -->
                     <form class="form-panel active" id="form-login" onsubmit="doLogin(event)">
                         <div class="input-box">
+                            <i class='bx bx-buildings'></i>
+                            <input type="text" id="l-tenant" placeholder="Mã doanh nghiệp (Tùy chọn)" autocomplete="off">
+                            <label>Mã doanh nghiệp (Tùy chọn)</label>
+                        </div>
+                        <div class="input-box">
                             <i class='bx bx-envelope'></i>
-                            <input type="text" id="l-uid" placeholder="Tài khoản / Email" required autocomplete="off">
-                            <label>Tài khoản / Email</label>
+                            <input type="text" id="l-uid" placeholder="Tài khoản hoặc Email" required autocomplete="off">
+                            <label>Tài khoản hoặc Email</label>
                         </div>
                         <div class="input-box">
                             <i class='bx bx-lock-alt'></i>
@@ -446,62 +471,71 @@
 
                     <!-- Register Form -->
                     <form class="form-panel" id="form-register" onsubmit="doRegister(event)">
-                        <div class="input-box">
-                            <i class='bx bx-user'></i>
-                            <input type="text" id="r-name" placeholder="Họ và tên" required>
-                            <label>Họ và tên</label>
-                        </div>
-                        <div class="input-box">
-                            <i class='bx bx-envelope'></i>
-                            <input type="email" id="r-email" placeholder="Email công việc" required>
-                            <label>Email công việc</label>
-                        </div>
-                        <div style="display: flex; gap: 15px;">
-                            <div class="input-box" style="flex:1;">
+                        <div class="form-grid">
+                            <div class="input-box full-width">
+                                <i class='bx bx-user'></i>
+                                <input type="text" id="r-name" placeholder="Họ và tên đầy đủ" required>
+                                <label>Họ và tên đầy đủ</label>
+                            </div>
+                            
+                            <div class="input-box">
+                                <i class='bx bx-buildings'></i>
+                                <input type="text" id="r-company" placeholder="Tên công ty / Tổ chức" required>
+                                <label>Công ty / Tổ chức</label>
+                            </div>
+                            <div class="input-box">
+                                <i class='bx bx-briefcase-alt-2'></i>
+                                <input type="text" id="r-role" placeholder="Chức vụ" required>
+                                <label>Chức vụ</label>
+                            </div>
+
+                            <div class="input-box">
+                                <i class='bx bx-phone'></i>
+                                <input type="tel" id="r-phone" placeholder="Số điện thoại" required>
+                                <label>Số điện thoại</label>
+                            </div>
+                            <div class="input-box">
+                                <i class='bx bx-envelope'></i>
+                                <input type="email" id="r-email" placeholder="Email công việc" required>
+                                <label>Email công việc</label>
+                            </div>
+
+                            <div class="input-box">
                                 <i class='bx bx-lock-alt'></i>
                                 <input type="password" id="r-pwd" placeholder="Mật khẩu" required minlength="6">
                                 <label>Mật khẩu</label>
                             </div>
-                            <div class="input-box" style="flex:1;">
+                            <div class="input-box">
                                 <i class='bx bx-check-shield'></i>
-                                <input type="password" id="r-repwd" placeholder="Xác nhận" required minlength="6">
-                                <label>Xác nhận</label>
+                                <input type="password" id="r-repwd" placeholder="Xác nhận mật khẩu" required minlength="6">
+                                <label>Xác nhận mật khẩu</label>
+                            </div>
+                            
+                            <div class="full-width meta-actions" style="margin-bottom: 15px;">
+                                <label class="custom-check">
+                                    <input type="checkbox" required>
+                                    <div class="checkmark"></div>
+                                    <span style="font-size: 13px;">Tôi đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật của Smart ERP.</span>
+                                </label>
                             </div>
                         </div>
-                        <button type="submit" class="btn-glow">Tạo tài khoản <i class='bx bx-rocket'></i></button>
+                        <button type="submit" class="btn-glow">Đăng ký tài khoản <i class='bx bx-rocket'></i></button>
                     </form>
                 </div>
             </div>
 
-            <!-- Dashboard App View (After login) -->
+            <!-- Dashboard App View -->
             <div id="app-flow" class="dashboard-content">
                 <i class='bx bx-check-shield'></i>
                 <h2 style="margin-bottom: 12px; font-weight: 700;">Đăng nhập thành công</h2>
-                <p id="app-welcome" style="color: var(--text-secondary); margin-bottom: 35px; font-size: 16px; line-height: 1.6;"></p>
-                <button class="btn-glow" onclick="window.location.reload()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); box-shadow: none;">Đăng xuất <i class='bx bx-exit'></i></button>
+                <p id="app-welcome" style="color: var(--text-secondary); margin-bottom: 35px; font-size: 15px; line-height: 1.6;"></p>
+                <button class="btn-glow" onclick="window.location.reload()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); box-shadow: none;">Đăng xuất an toàn <i class='bx bx-exit'></i></button>
             </div>
 
         </div>
     </div>
 
     <script>
-        const tiltBox = document.getElementById('tilt-box');
-        
-        document.addEventListener('mousemove', (e) => {
-            const x = window.innerWidth / 2 - e.pageX;
-            const y = window.innerHeight / 2 - e.pageY;
-            
-            const maxTilt = 15;
-            const tiltX = Math.max(Math.min((y / window.innerHeight) * 30, maxTilt), -maxTilt);
-            const tiltY = Math.max(Math.min(-(x / window.innerWidth) * 30, maxTilt), -maxTilt);
-
-            tiltBox.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-        });
-
-        document.addEventListener('mouseleave', () => {
-            tiltBox.style.transform = `rotateX(0deg) rotateY(0deg)`;
-        });
-
         function switchMode(mode) {
             const high = document.getElementById('seg-high');
             const btns = document.querySelectorAll('.segment-btn');
@@ -547,18 +581,25 @@
             e.preventDefault();
             const name = document.getElementById('r-name').value;
             const email = document.getElementById('r-email').value;
+            const company = document.getElementById('r-company').value;
             const p1 = document.getElementById('r-pwd').value;
             const p2 = document.getElementById('r-repwd').value;
 
-            if (p1 !== p2) return showToast('Mật khẩu xác nhận không khớp.', 'error');
+            if (p1 !== p2) {
+                showToast('Mật khẩu xác nhận không khớp.', 'error');
+                return;
+            }
             
             let db = JSON.parse(localStorage.getItem('erp_core_users') || '{}');
-            if (db[email] || email === 'admin') return showToast('Email hoặc tài khoản đã tồn tại.', 'error');
+            if (db[email] || email === 'admin') {
+                showToast('Email hoặc tài khoản đã tồn tại trong hệ thống.', 'error');
+                return;
+            }
 
-            db[email] = { pass: p1, name: name };
+            db[email] = { pass: p1, name: name, company: company };
             localStorage.setItem('erp_core_users', JSON.stringify(db));
             
-            showToast('Đăng ký thành công. Vui lòng đăng nhập.', 'success');
+            showToast('Đăng ký thành công tài khoản Doanh nghiệp. Vui lòng đăng nhập.', 'success');
             document.getElementById('form-register').reset();
             setTimeout(() => {
                 switchMode('login');
@@ -582,13 +623,16 @@
 
                 let valid = false;
                 let userN = email;
+                let companyInfo = 'Quản trị viên Hệ thống';
 
                 if (email === 'admin' && pass === 'admin') {
                     valid = true; userN = 'Quản trị viên (Admin)';
                 } else {
                     let db = JSON.parse(localStorage.getItem('erp_core_users') || '{}');
                     if (db[email] && db[email].pass === pass) {
-                        valid = true; userN = db[email].name;
+                        valid = true; 
+                        userN = db[email].name;
+                        companyInfo = db[email].company;
                     }
                 }
 
@@ -596,7 +640,7 @@
                     document.getElementById('auth-flow').style.display = 'none';
                     const appFlow = document.getElementById('app-flow');
                     appFlow.style.display = 'block';
-                    document.getElementById('app-welcome').innerHTML = `Xin chào <strong style="color:var(--text-primary);">${userN}</strong><br>Chào mừng bạn quay lại hệ thống Quản trị Thủy Hải Sản.`;
+                    document.getElementById('app-welcome').innerHTML = `Xin chào <strong style="color:var(--text-primary);">${userN}</strong> (${companyInfo})<br>Chào mừng bạn quay lại Hệ thống Quản trị Thủy Hải Sản.`;
                 } else {
                     showToast('Sai tên đăng nhập hoặc mật khẩu.', 'error');
                 }
