@@ -433,8 +433,8 @@
 
                 <div class="segmented-control">
                     <div class="segment-highlight" id="seg-high"></div>
-                    <div class="segment-btn active" onclick="switchMode('login')">Sign In</div>
-                    <div class="segment-btn" onclick="switchMode('register')">Create Account</div>
+                    <div class="segment-btn active" onclick="switchMode('login')">Login</div>
+                    <div class="segment-btn" onclick="switchMode('register')">Sign Up</div>
                 </div>
 
                 <div class="forms-wrapper">
@@ -458,7 +458,7 @@
                             </label>
                             <a href="#" class="forgot-pass">Recover password?</a>
                         </div>
-                        <button type="submit" class="btn-glow" id="btn-login-submit">Authenticate <i class='bx bx-right-arrow-alt'></i></button>
+                        <button type="submit" class="btn-glow" id="btn-login-submit">Login <i class='bx bx-right-arrow-alt'></i></button>
                     </form>
 
                     <!-- Register Form -->
@@ -485,7 +485,7 @@
                                 <label>Verify</label>
                             </div>
                         </div>
-                        <button type="submit" class="btn-glow">Initialize Account <i class='bx bx-rocket'></i></button>
+                        <button type="submit" class="btn-glow">Sign Up <i class='bx bx-rocket'></i></button>
                     </form>
                 </div>
             </div>
@@ -596,7 +596,7 @@
             const btn = document.getElementById('btn-login-submit');
             
             const originalText = btn.innerHTML;
-            btn.innerHTML = "<i class='bx bx-loader-alt bx-spin' style='font-size:20px; margin-right:8px;'></i> Processing...";
+            btn.innerHTML = "<i class='bx bx-loader-alt bx-spin' style='font-size:20px; margin-right:8px;'></i> Logging in...";
             btn.style.opacity = 0.7;
 
             setTimeout(() => {
