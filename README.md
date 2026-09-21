@@ -1,5 +1,4 @@
 # 🌊 Seafood Management AI ERP
-## Thuc hanh DevOps Lab 2 - Git & Jenkins
 ![Odoo](https://img.shields.io/badge/Odoo-19.0-purple?style=flat-square&logo=odoo)
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)
 ![AI](https://img.shields.io/badge/AI-Google%20Gemini-orange?style=flat-square&logo=google)
@@ -44,5 +43,3 @@ seafood_management/
 3. Bật chế độ Developer Mode trên Odoo.
 4. Cập nhật danh sách ứng dụng và cài đặt `Seafood Management`.
 
----
-*Phát triển bởi Nhang Dinh - Đồ án Tốt nghiệp / Thực tập 2026*
