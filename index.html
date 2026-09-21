@@ -33,12 +33,9 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            perspective: 1000px; /* Enable 3D depth for the card tilt */
+            perspective: 1000px;
         }
 
-        /* -----------------------
-           The Aurora Background 
-           ----------------------- */
         .aurora-container {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -65,7 +62,6 @@
             100% { transform: scale(0.9) translate(-5%, -5%); }
         }
 
-        /* Star grid overlay */
         .grid-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -78,9 +74,6 @@
             -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
         }
 
-        /* -----------------------
-           3D Glass Card Container
-           ----------------------- */
         .auth-container {
             position: relative;
             z-index: 10;
@@ -101,13 +94,13 @@
                 0 30px 60px rgba(0, 0, 0, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transform: translateZ(0);
-            transition: transform 0.1s ease-out; /* Smooth transition when mouse leaves */
+            transition: transform 0.1s ease-out;
         }
 
         .auth-header {
             text-align: center;
             margin-bottom: 35px;
-            transform: translateZ(30px); /* Popping out effect */
+            transform: translateZ(30px);
         }
 
         .auth-header .logo-icon {
@@ -133,7 +126,6 @@
             font-weight: 400;
         }
 
-        /* Segmented Control / Tabs */
         .segmented-control {
             display: flex;
             background: rgba(0, 0, 0, 0.3);
@@ -172,7 +164,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* Forms Area */
         .forms-wrapper {
             position: relative;
             min-height: 290px;
@@ -195,7 +186,6 @@
             position: relative;
         }
 
-        /* Inputs */
         .input-box {
             position: relative;
             margin-bottom: 22px;
@@ -251,7 +241,7 @@
             top: -12px;
             left: 15px;
             font-size: 12px;
-            background: #050505; /* Fallback for unsupported browsers */
+            background: #050505; 
             background: linear-gradient(to bottom, transparent, rgba(20, 20, 22, 0.8) 50%, rgba(20, 20, 22, 0.9));
             padding: 0 8px;
             color: var(--accent-1);
@@ -263,7 +253,6 @@
             color: var(--accent-1);
         }
 
-        /* Additional Form Elements */
         .meta-actions {
             display: flex;
             justify-content: space-between;
@@ -296,7 +285,7 @@
             border-color: var(--accent-2);
         }
         .custom-check input:checked + .checkmark::after {
-            content: '\eb7a'; /* Boxicons check mark */
+            content: '\eb7a'; 
             font-family: 'boxicons';
             color: white;
             font-size: 16px;
@@ -309,7 +298,6 @@
         }
         .forgot-pass:hover { color: var(--accent-1); }
 
-        /* Premium Submit Button */
         .btn-glow {
             width: 100%;
             padding: 18px;
@@ -354,7 +342,6 @@
         .btn-glow:hover::before { left: 100%; }
         .btn-glow:active { transform: translateY(1px) translateZ(20px); }
 
-        /* Mini Alert Toast (Modern replacement for Alert Boxes) */
         .toast {
             position: fixed;
             top: 40px;
@@ -383,7 +370,6 @@
         .toast.success { border-color: #10b981; }
         .toast.success i { color: #10b981; }
 
-        /* Dashboard */
         .dashboard-content {
             display: none;
             text-align: center;
@@ -406,7 +392,6 @@
 </head>
 <body>
 
-    <!-- 1. Ambient Background -->
     <div class="aurora-container">
         <div class="aurora-blob blob-1"></div>
         <div class="aurora-blob blob-2"></div>
@@ -414,27 +399,25 @@
         <div class="grid-overlay"></div>
     </div>
 
-    <!-- 2. Dynamic Toast Notification -->
     <div class="toast" id="toast">
         <i class='bx bx-info-circle' id="toast-icon"></i>
-        <span id="toast-msg">Message</span>
+        <span id="toast-msg">Thông báo</span>
     </div>
 
-    <!-- 3. The 3D Card -->
     <div class="auth-container" id="tilt-box">
         <div class="auth-card">
             
             <div id="auth-flow">
                 <div class="auth-header">
                     <i class='bx bxl-sketch logo-icon'></i>
-                    <h1>Smart ERP Core</h1>
-                    <p>Enter the ecosystem</p>
+                    <h1>Hệ thống Smart ERP</h1>
+                    <p>Đăng nhập vào hệ thống quản trị</p>
                 </div>
 
                 <div class="segmented-control">
                     <div class="segment-highlight" id="seg-high"></div>
-                    <div class="segment-btn active" onclick="switchMode('login')">Login</div>
-                    <div class="segment-btn" onclick="switchMode('register')">Sign Up</div>
+                    <div class="segment-btn active" onclick="switchMode('login')">Đăng nhập</div>
+                    <div class="segment-btn" onclick="switchMode('register')">Đăng ký</div>
                 </div>
 
                 <div class="forms-wrapper">
@@ -442,50 +425,50 @@
                     <form class="form-panel active" id="form-login" onsubmit="doLogin(event)">
                         <div class="input-box">
                             <i class='bx bx-envelope'></i>
-                            <input type="text" id="l-uid" placeholder="Email" required autocomplete="off">
-                            <label>Account ID / Email</label>
+                            <input type="text" id="l-uid" placeholder="Tài khoản / Email" required autocomplete="off">
+                            <label>Tài khoản / Email</label>
                         </div>
                         <div class="input-box">
                             <i class='bx bx-lock-alt'></i>
-                            <input type="password" id="l-pwd" placeholder="Password" required>
-                            <label>Password</label>
+                            <input type="password" id="l-pwd" placeholder="Mật khẩu" required>
+                            <label>Mật khẩu</label>
                         </div>
                         <div class="meta-actions">
                             <label class="custom-check">
                                 <input type="checkbox">
                                 <div class="checkmark"></div>
-                                Keep me logged in
+                                Ghi nhớ đăng nhập
                             </label>
-                            <a href="#" class="forgot-pass">Recover password?</a>
+                            <a href="#" class="forgot-pass">Quên mật khẩu?</a>
                         </div>
-                        <button type="submit" class="btn-glow" id="btn-login-submit">Login <i class='bx bx-right-arrow-alt'></i></button>
+                        <button type="submit" class="btn-glow" id="btn-login-submit">Đăng nhập <i class='bx bx-right-arrow-alt'></i></button>
                     </form>
 
                     <!-- Register Form -->
                     <form class="form-panel" id="form-register" onsubmit="doRegister(event)">
                         <div class="input-box">
                             <i class='bx bx-user'></i>
-                            <input type="text" id="r-name" placeholder="Name" required>
-                            <label>Full Name</label>
+                            <input type="text" id="r-name" placeholder="Họ và tên" required>
+                            <label>Họ và tên</label>
                         </div>
                         <div class="input-box">
                             <i class='bx bx-envelope'></i>
-                            <input type="email" id="r-email" placeholder="Email" required>
-                            <label>Work Email</label>
+                            <input type="email" id="r-email" placeholder="Email công việc" required>
+                            <label>Email công việc</label>
                         </div>
                         <div style="display: flex; gap: 15px;">
                             <div class="input-box" style="flex:1;">
                                 <i class='bx bx-lock-alt'></i>
-                                <input type="password" id="r-pwd" placeholder="Pass" required minlength="6">
-                                <label>Password</label>
+                                <input type="password" id="r-pwd" placeholder="Mật khẩu" required minlength="6">
+                                <label>Mật khẩu</label>
                             </div>
                             <div class="input-box" style="flex:1;">
                                 <i class='bx bx-check-shield'></i>
-                                <input type="password" id="r-repwd" placeholder="Verify" required minlength="6">
-                                <label>Verify</label>
+                                <input type="password" id="r-repwd" placeholder="Xác nhận" required minlength="6">
+                                <label>Xác nhận</label>
                             </div>
                         </div>
-                        <button type="submit" class="btn-glow">Sign Up <i class='bx bx-rocket'></i></button>
+                        <button type="submit" class="btn-glow">Tạo tài khoản <i class='bx bx-rocket'></i></button>
                     </form>
                 </div>
             </div>
@@ -493,23 +476,21 @@
             <!-- Dashboard App View (After login) -->
             <div id="app-flow" class="dashboard-content">
                 <i class='bx bx-check-shield'></i>
-                <h2 style="margin-bottom: 12px; font-weight: 700;">Secure Connection Established</h2>
+                <h2 style="margin-bottom: 12px; font-weight: 700;">Đăng nhập thành công</h2>
                 <p id="app-welcome" style="color: var(--text-secondary); margin-bottom: 35px; font-size: 16px; line-height: 1.6;"></p>
-                <button class="btn-glow" onclick="window.location.reload()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); box-shadow: none;">Terminate Session <i class='bx bx-exit'></i></button>
+                <button class="btn-glow" onclick="window.location.reload()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); box-shadow: none;">Đăng xuất <i class='bx bx-exit'></i></button>
             </div>
 
         </div>
     </div>
 
     <script>
-        // 1. 3D Tilt Effect on mousemove
         const tiltBox = document.getElementById('tilt-box');
         
         document.addEventListener('mousemove', (e) => {
             const x = window.innerWidth / 2 - e.pageX;
             const y = window.innerHeight / 2 - e.pageY;
             
-            // Limit the tilt angle to 15 degrees max
             const maxTilt = 15;
             const tiltX = Math.max(Math.min((y / window.innerHeight) * 30, maxTilt), -maxTilt);
             const tiltY = Math.max(Math.min(-(x / window.innerWidth) * 30, maxTilt), -maxTilt);
@@ -517,12 +498,10 @@
             tiltBox.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
         });
 
-        // Snap back to 0 when mouse leaves window
         document.addEventListener('mouseleave', () => {
             tiltBox.style.transform = `rotateX(0deg) rotateY(0deg)`;
         });
 
-        // 2. Tab Switching Logic
         function switchMode(mode) {
             const high = document.getElementById('seg-high');
             const btns = document.querySelectorAll('.segment-btn');
@@ -546,7 +525,6 @@
             }
         }
 
-        // 3. Elegant Toast Notifications
         let toastTimeout;
         function showToast(msg, type = 'info') {
             const toast = document.getElementById('toast');
@@ -565,7 +543,6 @@
             }, 3500);
         }
 
-        // 4. Core Logic
         function doRegister(e) {
             e.preventDefault();
             const name = document.getElementById('r-name').value;
@@ -573,15 +550,15 @@
             const p1 = document.getElementById('r-pwd').value;
             const p2 = document.getElementById('r-repwd').value;
 
-            if (p1 !== p2) return showToast('Security mismatch. Passwords do not match.', 'error');
+            if (p1 !== p2) return showToast('Mật khẩu xác nhận không khớp.', 'error');
             
             let db = JSON.parse(localStorage.getItem('erp_core_users') || '{}');
-            if (db[email] || email === 'admin') return showToast('Identifier already exists in matrix.', 'error');
+            if (db[email] || email === 'admin') return showToast('Email hoặc tài khoản đã tồn tại.', 'error');
 
             db[email] = { pass: p1, name: name };
             localStorage.setItem('erp_core_users', JSON.stringify(db));
             
-            showToast('Authorization granted. Identity registered.', 'success');
+            showToast('Đăng ký thành công. Vui lòng đăng nhập.', 'success');
             document.getElementById('form-register').reset();
             setTimeout(() => {
                 switchMode('login');
@@ -596,7 +573,7 @@
             const btn = document.getElementById('btn-login-submit');
             
             const originalText = btn.innerHTML;
-            btn.innerHTML = "<i class='bx bx-loader-alt bx-spin' style='font-size:20px; margin-right:8px;'></i> Logging in...";
+            btn.innerHTML = "<i class='bx bx-loader-alt bx-spin' style='font-size:20px; margin-right:8px;'></i> Đang xử lý...";
             btn.style.opacity = 0.7;
 
             setTimeout(() => {
@@ -607,7 +584,7 @@
                 let userN = email;
 
                 if (email === 'admin' && pass === 'admin') {
-                    valid = true; userN = 'Super Administrator';
+                    valid = true; userN = 'Quản trị viên (Admin)';
                 } else {
                     let db = JSON.parse(localStorage.getItem('erp_core_users') || '{}');
                     if (db[email] && db[email].pass === pass) {
@@ -619,9 +596,9 @@
                     document.getElementById('auth-flow').style.display = 'none';
                     const appFlow = document.getElementById('app-flow');
                     appFlow.style.display = 'block';
-                    document.getElementById('app-welcome').innerHTML = `Identity verified: <strong style="color:var(--text-primary);">${userN}</strong><br>Welcome to the Seafood ERP Command Center.`;
+                    document.getElementById('app-welcome').innerHTML = `Xin chào <strong style="color:var(--text-primary);">${userN}</strong><br>Chào mừng bạn quay lại hệ thống Quản trị Thủy Hải Sản.`;
                 } else {
-                    showToast('Access Denied. Invalid credentials.', 'error');
+                    showToast('Sai tên đăng nhập hoặc mật khẩu.', 'error');
                 }
             }, 1200);
         }
