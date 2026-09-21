@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  smart-erp-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smart-erp-seafood
+    ports:
+      - "10000:8069" # Ánh xạ port 10000 ở ngoài host vào port 8069 của container
+    restart: always
+    environment:
+      - NODE_ENV=production
